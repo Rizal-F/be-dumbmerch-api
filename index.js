@@ -18,14 +18,14 @@ const { Server } = require("socket.io");
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000", // define client origin if both client and server have different origin
+    origin: process.env.CLIENT_URL, // we must define cors because our client and server have diffe
   },
 });
 
 require("./src/socket")(io);
 
 // deklarasi port
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 // Get routes endpoint api
 const router = require("./src/routes");
