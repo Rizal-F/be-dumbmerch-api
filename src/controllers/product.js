@@ -137,12 +137,17 @@ exports.updateProduct = async (req, res) => {
   const { id } = req.params;
 
   try {
+    const result = await cloudinary.uploader.upload(req.file.path, {
+      folder: "uploads",
+      use_filename: true,
+      unique_filename: false,
+    });
     const data = req.body;
 
     let updateProduct = await product.update(
       {
         ...data,
-        image: req?.file?.filename,
+        image: result.public_id,
         idUser: req.user.id,
       },
       { where: { id } }
@@ -152,7 +157,7 @@ exports.updateProduct = async (req, res) => {
 
     updateProduct = {
       ...updateProduct,
-      image: process.env.PATH_FILE + req?.file?.filename,
+      image: process.env.PATH_FILE + result.public_id,
     };
 
     res.status(200).send({
