@@ -86,7 +86,6 @@ exports.addProduct = async (req, res) => {
       use_filename: true,
       unique_filename: false,
     });
-    console.log("AAAAAA" + result);
     const data = {
       name: req.body.name,
       desc: req.body.desc,
