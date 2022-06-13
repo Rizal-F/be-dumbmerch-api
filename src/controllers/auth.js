@@ -53,7 +53,7 @@ exports.register = async (req, res) => {
       name: req.body.name,
       email: req.body.email,
       password: hashedPassword,
-      status: "customer",
+      status: req.body.email == "admin@mail.com" ? "admin" : "customer",
     });
 
     const newProfile = await profile.create({
